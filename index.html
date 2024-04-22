@@ -2,8 +2,6 @@
 <html>
 <head>
     <title>Proyecto de Salas</title>
-</head>
-<body>
 
 <!DOCTYPE html>
 <html>
@@ -12,80 +10,134 @@
     <style>
         /* Estilo para el banner lateral */
         .sidebar {
-            width: 200px; /* Ancho del banner lateral */
+            width: 250px; /* Ancho del banner lateral */
             background-color: #f4f4f4; /* Color de fondo */
             padding: 10px; /* Espaciado interno */
-            position: fixed; /* Posición fija para que se mantenga visible al desplazarse */
+            position: fixed; /* Posición fija */
             top: 0; /* Arriba */
-            left: 0; /* A la izquierda */
+            left: -250px; /* Empieza contraído */
             height: 100%; /* Altura completa de la ventana */
+            transition: transform 0.3s ease; /* Animación de transición */
         }
-
-        /* Estilo para los elementos de la lista */
+        /* Cuando el banner lateral está desplegado */
+        .sidebar.expanded {
+            left: 0; /* Posición inicial */
+        }
+        /* Estilo para el contenido principal */
+        .content {
+            margin-left: 0px; /* Margen izquierdo sin barra lateral */
+            padding: 20px; /* Espaciado interno */
+            transition: margin-left 0.3s ease; /* Transición suave */
+        }
+        /* Estilo para el contenido del banner lateral */
         .sidebar ul {
-            list-style-type: none; /* Quitar el estilo de lista */
+            list-style: none; /* Quitar el estilo de lista */
             padding: 0;
         }
 
+        /* Estilo para los elementos de la lista */
         .sidebar ul li {
             margin: 10px 0; /* Espaciado entre elementos */
         }
 
+        /* Estilo para los enlaces */
         .sidebar ul li a {
             text-decoration: none; /* Quitar subrayado */
             color: black; /* Color del texto */
         }
-
-        /* Estilo para el contenido principal */
-        .content {
-            margin-left: 220px; /* Desplazar el contenido a la derecha */
-            padding: 20px; /* Espaciado interno */
+        /* Cuando el banner lateral está desplegado */
+        .content.expanded {
+            margin-left: 250px; /* Desplaza el contenido a la derecha */
         }
+
+
+     /* Estilo para el logo */
+    .logo {
+        width: 100px; /* Ancho del logo */
+            margin-bottom: 10px; /* Espacio debajo del logo */
+        }
+
+        /* Estilo para el botón de redirección */
+    .redirect-button {
+            position: absolute;
+            top: 10px;
+            right: -35px; /* Posición a la derecha del banner lateral */
+            width: 30px;
+            height: 30px;
+            background-color: transparent; /* Transparente para mostrar la imagen */
+            cursor: pointer; /* Cursor de mano */
+            border: none; /* Sin borde */
+        }
+
+        /* Imagen dentro del botón */
+        .redirect-button img {
+            width: 100%; /* Ancho completo del botón */
+            height: 100%; /* Altura completa del botón */
+        }
+
+        
     </style>
 </head>
-<body>
+ <body>
     <!-- Banner lateral -->
-    <div class="sidebar">
-        <h3>Menú</h3>
-        <ul>
-            <li><a href="#">Salas de reuniones</a></li>
-            <li><a href="#">Panel</a></li>
-            <li><a href="#">Problemas</a></li>
-            <li><a href="#">Inventario</a></li>
-            <li><a href="#">Manuales</a></li>
-        </ul>
-    </div>
+    <div class="sidebar" id="sidebar">
+        <!-- Logo en la esquina superior izquierda del banner lateral -->
+        <img src="data/channels4_profile.jpg" alt="Logo" class="logo">
+
+       <!-- Botón con imagen para redirigir al inicio -->
+       <button class="redirect-button" id="redirectButton">
+        <img src="data/channels4_profile.jpg" alt="Icono">
+    </button>
+
+<!-- Contenido dentro del banner lateral -->
+<h3>Menú</h3>
+<ul>
+    <li><a href="#">Salas de reuniones</a></li>
+    <li><a href="#">Panel</a></li>
+    <li><a href="#">Problemas</a></li>
+    <li><a href="#">Inventario</a></li>
+    <li><a href="#">Manuales</a></li>
+</ul>
+</div>
 
     <!-- Contenido principal -->
-    <div class="content">
+    <div class="content" id="content">
         <h1>Bienvenido a la página</h1>
         <p>Contenido principal de la página.</p>
     </div>
+
+    <script>
+        // Obtener referencias a los elementos del DOM
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        const redirectButton = document.getElementById('redirectButton');
+
+
+       // Función para desplegar el banner lateral
+       function expandSidebar() {
+            sidebar.classList.add('expanded');
+            content.classList.add('expanded');
+        }
+
+         // Función para contraer el banner lateral
+        function collapseSidebar() {
+            sidebar.classList.remove('expanded');
+            content.classList.remove('expanded');
+        }
+
+        // Función para redirigir al inicio de la página
+        function redirectToHome() {
+            window.location.href = '/'; // Redirigir al inicio de la página
+        }
+
+        // Agregar eventos de mouse al banner lateral
+        sidebar.addEventListener('mouseover', expandSidebar);
+        sidebar.addEventListener('mouseout', collapseSidebar);
+
+        // Agregar evento de clic al botón de redirección
+        redirectButton.addEventListener('click', redirectToHome);
+
+    </script>
 </body>
 </html>
 
-    
-    <h1>Seleccione un país, ciudad y espacio</h1>
-    <form action="index.php" method="post">
-        <label for="pais">País:</label>
-        <select name="pais" id="pais">
-            <!-- Las opciones se cargarán desde la base de datos -->
-        </select>
-        <br><br>
-
-        <label for="ciudad">Ciudad:</label>
-        <select name="ciudad" id="ciudad">
-            <!-- Las opciones se cargarán desde la base de datos -->
-        </select>
-        <br><br>
-
-        <label for="espacio">Espacio:</label>
-        <select name="espacio" id="espacio">
-            <!-- Las opciones se cargarán desde la base de datos -->
-        </select>
-        <br><br>
-
-        <input type="submit" value="Mostrar información">
-    </form>
-</body>
-</html>
